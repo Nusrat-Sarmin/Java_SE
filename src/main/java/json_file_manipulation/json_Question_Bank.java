@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class json_Question_Bank {
+    static int points = 0;
+    static int min = 0, max = 0;
+    static String fileName = "./src/main/resources/question.json";
+
     public static void main(String[] args) throws IOException, ParseException {
         Scanner input = new Scanner(System.in);
 
@@ -20,16 +24,18 @@ public class json_Question_Bank {
 
         int bb = input.nextInt();
         switch (bb) {
-            case 1: addQuiz();
+            case 1:
+                addQuiz();
                 break;
-            case 2: startQuiz();
+            case 2:
+                startQuiz();
+                System.out.println("You get " + points + " out of 5");
                 break;
         }
     }
 
     private static void addQuiz() throws IOException, ParseException {
         char ch = 'y';
-        String fileName = "./src/main/resources/question.json";
 
         do {
             JSONParser jsonParser = new JSONParser();
@@ -52,7 +58,7 @@ public class json_Question_Bank {
             quizObj.put("d", input.nextLine());
 
             System.out.println("Please Input Correct Answer: ");
-            quizObj.put("Correct ans", input.nextLine());
+            quizObj.put("Correct Answer", input.nextLine());
             JSONArray questionBank = (JSONArray) obj;
 
             questionBank.add(quizObj);
@@ -70,39 +76,37 @@ public class json_Question_Bank {
     }
 
     private static void startQuiz() throws IOException, ParseException {
-        String fileName = "./src/main/resources/question.json";
         JSONParser jsonParser = new JSONParser();
         Object obj = jsonParser.parse(new FileReader(fileName));
-        JSONArray jArray = (JSONArray) obj;
-
-        int points = 0;
+        JSONArray jsonArray = (JSONArray) obj;
+        max = jsonArray.size();
         for (int i = 0; i < 5; i++) {
-            int random1 = (int) (Math.random() * 10) + 1;
-            JSONObject jsonObject = (JSONObject) jArray.get(random1);
+            int rand1 = (int) (Math.random() * ((max - min) + min));
+            JSONObject jsonObject = (JSONObject) jsonArray.get(rand1);
 
             String question = (String) jsonObject.get("Questions");
             String a = (String) jsonObject.get("a");
             String b = (String) jsonObject.get("b");
             String c = (String) jsonObject.get("c");
             String d = (String) jsonObject.get("d");
-            String answer = (String) jsonObject.get("correct ans");
+            String answer = (String) jsonObject.get("Correct ans");
 
-            System.out.println(question);
+            System.out.println("Question: " + question);
             System.out.println("a: " + a);
             System.out.println("b: " + b);
             System.out.println("c: " + c);
             System.out.println("d: " + d);
 
             Scanner input = new Scanner(System.in);
-            char cha = input.next().charAt(0);
+            String choice = input.next();
 
-            if (answer.charAt(0) == cha) {
+            if (choice.equals(answer)) {
                 System.out.println("correct");
                 points++;
             } else {
                 System.out.println("not correct");
             }
+
         }
-        System.out.println("You get " + points + "out of 5");
     }
 }
