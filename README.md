@@ -42,7 +42,16 @@ System: Not correct
 Finally 5 different random questions will appear from your question database. At least add 20 questions from any category from testing.
 Result: You got [correct_marks] out of 5
 
-Start Quize:
+Add Quiz:
+
+
+
+
+https://user-images.githubusercontent.com/101436175/182851892-357602bb-a796-4a40-8afb-f37973afcbf3.mp4
+
+
+
+Start Quiz:
 
 
 
